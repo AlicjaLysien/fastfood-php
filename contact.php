@@ -107,20 +107,33 @@ session_start();
   <a href="drink.php" class="col-sm-3 foodmenu">Drinks</a>
 </div> 
 </div>
-<!-- food menu --> 
+<!-- food menu -->
+
+
+
+<?php
+if ( isset($_SESSION['is_sent']) && $_SESSION['is_sent'] == true)
+    echo $_SESSION['is_sent'];
+unset($_SESSION['is_sent']);
+
+if ( isset($_SESSION['not_sent']) && $_SESSION['not_sent'] == true)
+    echo $_SESSION['not_sent'];
+unset($_SESSION['not_sent']);
+?>
+
+
 
 <!-- mail form -->
 
 
-
 <div class="wholeform">
-<form>
+<form action="contact_action.php" method="post">
   <div class="form-group">
     <div class=" d-flex justify-content-center">
     <label for="exampleFormControlInput1">Email address:</label>
   </div>
     <div class=" d-flex justify-content-center">
-    <input type="email" class="form-control formwindow" id="exampleFormControlInput1" placeholder="name@example.com"
+    <input type="email" name="contact_email" class="form-control formwindow" id="exampleFormControlInput1" placeholder="name@example.com"
     
     <?php
 if ( $_SESSION['logged'] == true) 
@@ -130,12 +143,12 @@ echo "value='".$_SESSION['user_email']."'";
     >
   </div>
   </div>
-  <div class="form-group ">
+  <div class="form-group">
     <div class=" d-flex justify-content-center">
     <label for="exampleFormControlSelect1">Topic:</label>
   </div>
     <div class=" d-flex justify-content-center">
-    <select class="form-control formwindow" id="exampleFormControlSelect1">
+    <select name="contact_topic" class="form-control formwindow" id="exampleFormControlSelect1">
       <option>Order</option>
       <option>Services</option>
       <option>Career</option>
@@ -149,16 +162,11 @@ echo "value='".$_SESSION['user_email']."'";
     <label for="exampleFormControlTextarea1">Your message:</label>
   </div>
     <div class=" d-flex justify-content-center">
-    <textarea class="form-control messagewindow" id="exampleFormControlTextarea1" rows="3">
-      Hello! My name is <?php
-if ( $_SESSION['logged'] == true) 
-echo $_SESSION['user_name'];
-    ?>,
-    </textarea>
+        <textarea class="form-control messagewindow" name="contact_message" id="exampleFormControlTextarea1" rows="3"></textarea>
   </div>
   </div>
   <div class=" d-flex justify-content-center">
-  <button type="submit" class="btn btn-danger">send</button>
+  <button type="submit" class="btn btn-danger">Send</button>
 </div>
 </form>
 </div>

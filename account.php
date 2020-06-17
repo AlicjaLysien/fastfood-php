@@ -122,10 +122,10 @@ header('Location: main.php');
 <p style="text-align: center;">Tape your info to change</p>
 
     <?php
-    if ( (isset($_SESSION['account_change'])) && $_SESSION['account_change'] = false)
+    if ( (isset($_SESSION['account_change'])) && $_SESSION['account_change'] == false)
     { echo $_SESSION['account_no_changes'];
     unset($_SESSION['account_change']);}
-    if ( (isset($_SESSION['account_change'])) && $_SESSION['account_change'] = true)
+    if ( (isset($_SESSION['account_change'])) && $_SESSION['account_change'] == true)
     { echo $_SESSION['account_ok_changes'];
         unset($_SESSION['account_change']);}
 
