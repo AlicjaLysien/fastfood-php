@@ -9,14 +9,28 @@ if ( $_SESSION['logged'] == true) {
 
 
 require_once "connect.php";
+mysqli_report(MYSQLI_REPORT_STRICT);
 
-$connect_with_db = @new mysqli($host, $db_user, $db_password, $db_name);
+try {
+    $connect_with_db = @new mysqli($host, $db_user, $db_password, $db_name);
+    if ($connect_with_db->connect_errno > 0) {
+        throw new Exception(mysqli_connect_errno());
+    }
+}
+catch (Exception $e)
+{
+    echo "<p style='text-align: center; color: #8b0000; font-size: 22px;'>You created an account!</p>";
+    echo "Error information".$e;
+}
+
 
 if ($connect_with_db->connect_errno > 0)
 {
     echo "Error number: ".$connect_with_db->connect_errno." Error describtion: ".$connect_with_db->connect_error;
     /* error number is enough, you can find the describtion by error number, error describtion can show to user information we dont want to show */
 }
+
+
 else {
 
 
@@ -30,11 +44,12 @@ else {
     $register_city = $_POST['register_city'];
     $register_street = $_POST['register_street'];
     $register_home_number = $_POST['register_home_number'];
-
-
+    $register_checkbox = $_POST['register_checkbox'];
 
 
     $register_all_ok = true;
+
+
 
     // test email
     if (isset($register_email))
@@ -53,10 +68,6 @@ else {
         $register_all_ok = false;
     }
 
-    if (isset($_SESSION['error_email'])) {
-        header("Location: register.php");
-        exit();
-    }
 }
 
     //test password
@@ -70,12 +81,10 @@ else {
         $_SESSION['error_pass'] = "<p style='text-align: center; color: #8b0000; font-size: 16px;'>Password are not the same.</p>";
         $register_all_ok = false;
     }
-    if(isset($_SESSION['error_pass']))
-    {
-        header("Location: register.php");
-        exit();
-    }
 
+
+    // hash password
+    $hash_pass = password_hash($register_pass1, PASSWORD_DEFAULT);
 
 
     // name and surname test
@@ -90,29 +99,20 @@ else {
         $_SESSION['error_name'] = "<p style='text-align: center; color: #8b0000; font-size: 16px;'>Write the first name and the second name.</p>";
         $register_all_ok = false;
     }
-    if(isset($_SESSION['error_name']))
-    {
-        header("Location: register.php");
-        exit();
-    }
+
 
 // telephone test
-    if(strlen($register_telephone) != 9 )
-    {
-        $_SESSION['error_telephone'] = "<p style='text-align: center; color: #8b0000; font-size: 16px;'>Telephone number is too short or too long.</p>";
-        $register_all_ok = false;
-    }
     if(ctype_digit($register_telephone) == false)
     {
         $_SESSION['error_telephone'] = "<p style='text-align: center; color: #8b0000; font-size: 16px;'>Use only numeric characters.</p>";
         $register_all_ok = false;
     }
-
-    if(isset($_SESSION['error_telephone']))
+    if(strlen($register_telephone) != 9 )
     {
-        header("Location: register.php");
-        exit();
+        $_SESSION['error_telephone'] = "<p style='text-align: center; color: #8b0000; font-size: 16px;'>Telephone number is too short or too long.</p>";
+        $register_all_ok = false;
     }
+
 
 
     // address test
@@ -122,12 +122,13 @@ else {
         $register_all_ok = false;
     }
 
-    if(isset($_SESSION['error_address']))
-    {
-        header("Location: register.php");
-        exit();
-    }
 
+// checkbox test
+    if(!isset($_POST['register_checkbox']))
+    {
+        $_SESSION['error_checkbox'] = "<p style='text-align: center; color: #8b0000; font-size: 14px;'>Confirm conditions.</p>";
+        $register_all_ok = false;
+    }
 
 
     // final test
@@ -140,7 +141,10 @@ else {
         {
         // can be register
 
-            $sql_add_new_client = "INSERT INTO clients VALUES ('',)";
+$sql_add_new_client = "INSERT INTO clients VALUES (NULL, '$register_name', '$register_surname', '$register_email', 
+'$hash_pass', '$register_sex', '$register_telephone', '$register_city', '$register_street', '$register_home_number')";
+
+            @$connect_with_db->query($sql_add_new_client );
 
         $_SESSION['register_ok'] = "<p style='text-align: center; color: #8b0000; font-size: 22px;'>You created an account!</p>";
         header("Location: register.php");

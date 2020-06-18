@@ -284,7 +284,15 @@ if(isset($_SESSION['register_ok']))
     </div>
   </div>
 
-    <!--recaptcha-->
+    <?php
+    if(isset($_SESSION['error_checkbox']))
+    {
+        echo $_SESSION['error_checkbox'];
+        unset($_SESSION['error_checkbox']);
+    }
+    ?>
+
+    <!--recaptcha - not working yet -->
     <div class="g-recaptcha" data-sitekey="6LeBLaYZAAAAACBa9hTU_0Fv9gy6zaDMnCbdICC7"></div>
 
 
