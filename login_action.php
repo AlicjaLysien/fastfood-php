@@ -14,13 +14,22 @@ if ($connect_with_db->connect_errno > 0)
 else
 {
 
-   
     $login_email=$_POST['login_email'];
     $login_password=$_POST['login_password'];
 
-    $sql_find = "SELECT * FROM clients WHERE email ='$login_email' AND pass ='$login_password'";
-    
-    if ($result = @$connect_with_db->query($sql_find))  /* result = false, when i have error in my query, not when nothing found*/
+
+    // html entities - ignore the meaning of tags like <b>, so the nick cant be bold
+    // < is changed to symbol like &lt; and later again to <
+    // ENT_QUOTES - change also " and '
+    $login_email = htmlentities($login_email, ENT_QUOTES, "UTF-8");
+    $login_password = htmlentities($login_password, ENT_QUOTES, "UTF-8");
+
+
+
+    // result = false, when i have error in my query, not when nothing found
+    if ($result = @$connect_with_db->query(sprintf("SELECT * FROM clients WHERE email ='%s' AND pass ='%s'",
+    mysqli_real_escape_string($connect_with_db, $login_email),
+    mysqli_real_escape_string($connect_with_db, $login_password))))
   
         { 
             $sql_find_number = $result->num_rows;

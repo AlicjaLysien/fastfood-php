@@ -14,8 +14,8 @@ header('Location: main.php');
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
   <title>Create an account in Alicja's Fast Food</title>
+  <script src='https://www.google.com/recaptcha/api.js>'></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="fontello/css/fontello.css">
@@ -114,65 +114,99 @@ header('Location: main.php');
 <!-- register form -->
 
 
-
+<?php
+if(isset($_SESSION['register_ok']))
+{
+    echo $_SESSION['register_ok'];
+    unset($_SESSION['register_ok']);
+}
+?>
 
 <div class="wholeform">
-<form>
+
+<form method="post" action="register_action.php">
 
 
- 
+    <!--email-->
   <div class="form-group ">
     <div class=" d-flex justify-content-center">
     <label for="inputAddress2">E-mail:</label>
   </div>
     <div class=" d-flex justify-content-center">
-    <input type="email" class="form-control formwindow" id="inputAddress2" placeholder="name@example.com">
+    <input name="register_email" type="email" class="form-control formwindow" placeholder="name@example.com">
   </div>
   </div>
+    <?php
+    if(isset($_SESSION['error_email']))
+    {
+        echo $_SESSION['error_email'];
+        unset($_SESSION['error_email']);
+    }
+    ?>
 
+    <!--password-->
     <div class="form-group ">
       <div class=" d-flex justify-content-center">
       <label for="inputEmail4">Password:</label>
     </div>
       <div class=" d-flex justify-content-center">
-      <input type="password" class="form-control formwindow" id="inputEmail4">
+      <input name="register_pass1" type="password" class="form-control formwindow">
     </div>
     </div>
-
+    <!--confirm password-->
     <div class="form-group  ">
       <div class=" d-flex justify-content-center">
       <label for="inputPassword4">Confirm password:</label>
     </div>
       <div class=" d-flex justify-content-center">
-      <input type="password" class="form-control formwindow" id="inputname">
+      <input name="register_pass2" type="password" class="form-control formwindow">
     </div>
     </div>
 
+    <?php
+    if(isset($_SESSION['error_pass']))
+    {
+        echo $_SESSION['error_pass'];
+        unset($_SESSION['error_pass']);
+    }
+    ?>
 
 
+    <!--first name-->
     <div class="form-group ">
       <div class=" d-flex justify-content-center">
       <label for="inputEmail4">First name:</label>
     </div>
       <div class=" d-flex justify-content-center">
-      <input type="text" class="form-control formwindow" id="inputEmail4">
+      <input name="register_name" type="text" class="form-control formwindow">
     </div>
     </div>
+    <!--second name-->
     <div class="form-group ">
       <div class=" d-flex justify-content-center">
       <label for="inputPassword4">Second name:</label>
     </div>
       <div class=" d-flex justify-content-center">
-      <input type="text" class="form-control formwindow" id="inputname">
+      <input name="register_surname" type="text" class="form-control formwindow">
     </div>
     </div>
 
+
+    <?php
+    if(isset($_SESSION['error_name']))
+    {
+        echo $_SESSION['error_name'];
+        unset($_SESSION['error_name']);
+    }
+    ?>
+
+    <!--sex-->
     <div class="form-group ">
       <div class=" d-flex justify-content-center">
       <label for="inputState">Sex:</label>
     </div>
       <div class=" d-flex justify-content-center">
-      <select id="inputState" class="form-control formwindow">
+      <select name="register_sex" id="inputState" class="form-control formwindow">
         <option selected>man</option>
         <option>woman</option>
         <option>other</option>
@@ -181,59 +215,77 @@ header('Location: main.php');
     </div>
 
 
-
+    <!--telephone-->
   <div class="form-group">
     <div class=" d-flex justify-content-center">
-    <label for="inputPassword4">Telefon number:</label>
+    <label for="inputPassword4">Telephone number:</label>
   </div>
     <div class=" d-flex justify-content-center">
-    <input type="text" class="form-control formwindow" id="inputname">
+    <input name="register_telephone" type="text" class="form-control formwindow">
   </div>
 </div>
 
-<!--adress-->
-  
+    <?php
+    if(isset($_SESSION['error_telephone']))
+    {
+        echo $_SESSION['error_telephone'];
+        unset($_SESSION['error_telephone']);
+    }
+    ?>
+
+<!--address city-->
     <div class="form-group ">
       <div class=" d-flex justify-content-center">
       <label for="inputCity">City:</label>
     </div>
     <div class=" d-flex justify-content-center">
-      <input type="text" class="form-control formwindow" id="inputCity">
+      <input name="register_city" type="text" class="form-control formwindow">
     </div>
     </div>
 
-
+    <!--address street-->
     <div class="form-group ">
       <div class=" d-flex justify-content-center">
       <label for="inputAddress">Street:</label>
       </div>
       <div class=" d-flex justify-content-center">
-      <input type="text" class="form-control formwindow" id="inputAddress" placeholder="">
+      <input name="register_street" type="text" class="form-control formwindow" placeholder="">
       </div>
     </div>
+
+    <!--address home number-->
     <div class="form-group  ">
       <div class=" d-flex justify-content-center">
       <label for="inputZip">Home number:</label>
       </div>
       <div class=" d-flex justify-content-center">
-      <input type="text" class="form-control" style="width: 150;" id="inputZip">
+      <input name="register_home_number" type="text" class="form-control" style="width: 150;" >
       </div>
   </div>
-<!--adress-->
 
+    <?php
+    if(isset($_SESSION['error_address']))
+    {
+        echo $_SESSION['error_address'];
+        unset($_SESSION['error_address']);
+    }
+    ?>
 
+    <!--checkbox-->
   <div class="form-group">
     <div class="form-check">
       <div class="d-flex justify-content-center">
        <div>
-      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <input name="register_checkbox" class="form-check-input" type="checkbox">
 </div>
       <label class="form-check-label" for="gridCheck"> I accept the terms and conditions
       </label>
-
     </div>
     </div>
   </div>
+
+    <!--recaptcha-->
+    <div class="g-recaptcha" data-sitekey="6LeBLaYZAAAAACBa9hTU_0Fv9gy6zaDMnCbdICC7"></div>
 
 
   <div class=" d-flex justify-content-center">
@@ -242,7 +294,7 @@ header('Location: main.php');
 </form>
 </div>
 
-<!-- register form -->
+<!-- register form end -->
 
 
 <!-- footer -->
