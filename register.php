@@ -133,7 +133,14 @@ if(isset($_SESSION['register_ok']))
     <label for="inputAddress2">E-mail:</label>
   </div>
     <div class=" d-flex justify-content-center">
-    <input name="register_email" type="email" class="form-control formwindow" placeholder="name@example.com">
+    <input name="register_email" type="email" class="form-control formwindow" placeholder="name@example.com"
+    value = "<?php
+    if(isset($_SESSION['last_email']))
+    {
+        echo $_SESSION['last_email'];
+        unset($_SESSION['last_email']);
+    }
+    ?>">
   </div>
   </div>
     <?php
@@ -178,7 +185,14 @@ if(isset($_SESSION['register_ok']))
       <label for="inputEmail4">First name:</label>
     </div>
       <div class=" d-flex justify-content-center">
-      <input name="register_name" type="text" class="form-control formwindow">
+      <input name="register_name" type="text" class="form-control formwindow"
+             value = "<?php
+             if(isset($_SESSION['last_name']))
+             {
+                 echo $_SESSION['last_name'];
+                 unset($_SESSION['last_name']);
+             }
+             ?>">
     </div>
     </div>
     <!--second name-->
@@ -187,7 +201,14 @@ if(isset($_SESSION['register_ok']))
       <label for="inputPassword4">Second name:</label>
     </div>
       <div class=" d-flex justify-content-center">
-      <input name="register_surname" type="text" class="form-control formwindow">
+      <input name="register_surname" type="text" class="form-control formwindow"
+             value = "<?php
+             if(isset($_SESSION['last_surname']))
+             {
+                 echo $_SESSION['last_surname'];
+                 unset($_SESSION['last_surname']);
+             }
+             ?>">
     </div>
     </div>
 
@@ -206,7 +227,14 @@ if(isset($_SESSION['register_ok']))
       <label for="inputState">Sex:</label>
     </div>
       <div class=" d-flex justify-content-center">
-      <select name="register_sex" id="inputState" class="form-control formwindow">
+      <select name="register_sex" id="inputState" class="form-control formwindow"
+              value = "<?php
+              if(isset($_SESSION['last_sex']))
+              {
+                  echo $_SESSION['last_sex'];
+                  unset($_SESSION['last_sex']);
+              }
+              ?>">
         <option selected>man</option>
         <option>woman</option>
         <option>other</option>
@@ -221,7 +249,14 @@ if(isset($_SESSION['register_ok']))
     <label for="inputPassword4">Telephone number:</label>
   </div>
     <div class=" d-flex justify-content-center">
-    <input name="register_telephone" type="text" class="form-control formwindow">
+    <input name="register_telephone" type="text" class="form-control formwindow"
+           value = "<?php
+           if(isset($_SESSION['last_telephone']))
+           {
+               echo $_SESSION['last_telephone'];
+               unset($_SESSION['last_telephone']);
+           }
+           ?>">
   </div>
 </div>
 
@@ -239,7 +274,14 @@ if(isset($_SESSION['register_ok']))
       <label for="inputCity">City:</label>
     </div>
     <div class=" d-flex justify-content-center">
-      <input name="register_city" type="text" class="form-control formwindow">
+      <input name="register_city" type="text" class="form-control formwindow"
+             value = "<?php
+             if(isset($_SESSION['last_city']))
+             {
+                 echo $_SESSION['last_city'];
+                 unset($_SESSION['last_city']);
+             }
+             ?>">
     </div>
     </div>
 
@@ -249,7 +291,14 @@ if(isset($_SESSION['register_ok']))
       <label for="inputAddress">Street:</label>
       </div>
       <div class=" d-flex justify-content-center">
-      <input name="register_street" type="text" class="form-control formwindow" placeholder="">
+      <input name="register_street" type="text" class="form-control formwindow"
+             value = "<?php
+             if(isset($_SESSION['last_street']))
+             {
+                 echo $_SESSION['last_street'];
+                 unset($_SESSION['last_street']);
+             }
+             ?>">
       </div>
     </div>
 
@@ -259,7 +308,14 @@ if(isset($_SESSION['register_ok']))
       <label for="inputZip">Home number:</label>
       </div>
       <div class=" d-flex justify-content-center">
-      <input name="register_home_number" type="text" class="form-control" style="width: 150;" >
+      <input name="register_home_number" type="text" class="form-control" style="width: 150px;"
+             value = "<?php
+             if(isset($_SESSION['last_home_number']))
+             {
+                 echo $_SESSION['last_home_number'];
+                 unset($_SESSION['last_home_number']);
+             }
+             ?>">
       </div>
   </div>
 
@@ -275,10 +331,18 @@ if(isset($_SESSION['register_ok']))
   <div class="form-group">
     <div class="form-check">
       <div class="d-flex justify-content-center">
-       <div>
-      <input name="register_checkbox" class="form-check-input" type="checkbox">
-</div>
-      <label class="form-check-label" for="gridCheck"> I accept the terms and conditions
+
+      <label class="form-check-label label-register">
+          <input name="register_checkbox" type="checkbox"
+          <?php
+          if (isset($_SESSION['last_checkbox']))
+          {
+           echo "checked";
+           unset($_SESSION['last_checkbox']);
+          }
+          ?>
+          >
+          I accept the terms and conditions
       </label>
     </div>
     </div>

@@ -130,6 +130,19 @@ else {
         $register_all_ok = false;
     }
 
+// remember informations
+    $_SESSION['last_email'] = $register_email;
+    $_SESSION['last_pass1'] = $register_pass1;
+    $_SESSION['last_pass2'] = $register_pass2;
+    $_SESSION['last_name'] = $register_name;
+    $_SESSION['last_surname'] = $register_surname;
+    $_SESSION['last_sex'] = $register_sex;
+    $_SESSION['last_telephone'] = $register_telephone;
+    $_SESSION['last_city'] = $register_city;
+    $_SESSION['last_street'] = $register_street;
+    $_SESSION['last_home_number'] = $register_home_number;
+    if(isset($_POST['register_checkbox'])) $_SESSION['last_checkbox'] = true;
+
 
     // final test
 
